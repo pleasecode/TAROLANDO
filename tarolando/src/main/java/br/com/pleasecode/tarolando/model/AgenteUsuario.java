@@ -17,9 +17,9 @@ public class AgenteUsuario {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
-	@Column(name="COD_AGENTE")	
-	@Column(name="MOMENTO")
-	@Column(name="USUARIO")
+	//@Column(name="COD_AGENTE")	
+	//@Column(name="MOMENTO")
+	//@Column(name="USUARIO")
 	private String usuario;
 	@Column(name="SENHA")
 	private String senha;

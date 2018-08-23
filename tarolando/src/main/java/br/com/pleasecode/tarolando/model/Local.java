@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,9 +22,11 @@ public class Local implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
-	@OneToMany
+	@ManyToOne
+	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "codSeguimento")
 	private Seguimento seguimento;
 	
+	@ManyToMany
 	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
 	private List<Atividade> atividades;
 	
@@ -131,5 +134,10 @@ public class Local implements Serializable {
 		this.atividades.add(atividade);
 		if (listaLocais != null)
 			atividade.getLocais().add(this);		
+	}
+	
+	public void adicionaIndicacao(Indicacao indicacao) {
+		this.indicacoes.add(indicacao);
+		indicacao.setLocal(this);
 	}
 }

@@ -50,6 +50,14 @@ public class Indicacao {
 
 	public void setCodIndicacao(Long codIndicacao) {
 		this.codIndicacao = codIndicacao;
+	}	
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Date getMomento() {

@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,13 +28,12 @@ public class Atividade implements Serializable{
 	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "codSeguimento")
 	private Seguimento seguimento;
 	
-	
 	// mappedBy define o lado dominado no manyToMany bidirecional, ou seja, só serve pra mostrar a quem esse lado da relação pertence
 	@ManyToMany(mappedBy = "atividades") 
 	@JoinColumn(name = "cod_local", referencedColumnName = "codLocal")
 	private List<Local> locais;
 	
-
+	@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -68,6 +69,19 @@ public class Atividade implements Serializable{
 
 	public Seguimento getSeguimento() {
 		return seguimento;
+	}
+	
+
+	public List<Indicacao> getIndicacoes() {
+		return indicacoes;
+	}
+
+	public void setIndicacoes(List<Indicacao> indicacoes) {
+		this.indicacoes = indicacoes;
+	}
+
+	public void setLocais(List<Local> locais) {
+		this.locais = locais;
 	}
 
 	public void setSeguimento(Seguimento seguimento) {
@@ -118,6 +132,13 @@ public class Atividade implements Serializable{
 		this.ativo = ativo;
 	}	
 	
+	public void adicionaIndicacao(Indicacao indicacao) {
+		this.indicacoes.add(indicacao);
+		indicacao.setAtividade(this);
+	}
 	
-
+	public void adicionaLocais(Local local) {		
+		this.locais.add(local);
+		local.adicionaAtividade(this);
+	}
 }

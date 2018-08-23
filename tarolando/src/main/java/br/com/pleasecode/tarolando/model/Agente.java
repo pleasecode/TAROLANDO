@@ -207,8 +207,20 @@ public class Agente implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}	
+	
+	public List<Indicacao> getIndicacoes() {
+		return indicacoes;
+	}
+
+	public void adicionaIndicacao(Indicacao indicacao) {
+		this.indicacoes.add(indicacao);
+		indicacao.setAgente(this);
 	}
 	
-	
+	public void adicionaEndereco(Endereco endereco) {
+		this.enderecos.add(endereco);
+		endereco.setAgente(this);
+	}
 
 }

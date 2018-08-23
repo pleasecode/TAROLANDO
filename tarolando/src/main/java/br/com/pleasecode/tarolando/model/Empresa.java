@@ -88,5 +88,10 @@ public class Empresa {
 		this.empresaPromocoes.add(empresaPromocao);
 		empresaPromocao.setEmpresa(this);
 	}
+	
+	public void adicionaIndicacao(Indicacao indicacao) {
+		this.indicacoes.add(indicacao);
+		indicacao.setEmpresa(this);
+	}
 
 }

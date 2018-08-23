@@ -40,5 +40,7 @@ public class Plano {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 	
+	
+	
 
 }
