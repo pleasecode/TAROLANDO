@@ -1,5 +1,31 @@
 package br.com.pleasecode.tarolando.model;
 
-public class AgenteEmpresa {
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+public class AgenteEmpresa {
+	@Column(name = "COD_AGENTE_EMPRESA")
+	private Long codAgenteEmpresa;
+	
+	@Column(name="MOMENTO")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date momento;
+	
+	private Agente agente;
+		
+	private Empresa empresa;
+	
+	@Column(name = "ATIVO")
+	private boolean ativo;
+
+
+
+	
+	
+	
 }
