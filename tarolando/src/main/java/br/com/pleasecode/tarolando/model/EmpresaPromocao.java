@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,6 +19,8 @@ public class EmpresaPromocao {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
+	@ManyToOne
+	@JoinColumn(name = "cod_empresa", referencedColumnName = "codEmpresa")
 	private Empresa empresa;
 	
 	@Column(name = "NOME")
@@ -30,4 +34,62 @@ public class EmpresaPromocao {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
+
+	public Long getCodEmpresaPromocao() {
+		return codEmpresaPromocao;
+	}
+
+	public void setCodEmpresaPromocao(Long codEmpresaPromocao) {
+		this.codEmpresaPromocao = codEmpresaPromocao;
+	}
+
+	public Date getMomento() {
+		return momento;
+	}
+
+	public void setMomento(Date momento) {
+		this.momento = momento;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	
 }
