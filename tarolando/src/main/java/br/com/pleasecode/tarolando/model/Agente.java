@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 
 @Entity
-public class Agente implements Serializable {
+public class Agente extends AbstractEntity {
 	
 	@Column(name="COD_AGENTE")
 	@Id
