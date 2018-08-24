@@ -8,9 +8,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class AgenteEmpresa {
-	@Column(name = "COD_AGENTE_EMPRESA")
-	private Long codAgenteEmpresa;
+public class AgenteEmpresa extends AbstractEntity {
 	
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
