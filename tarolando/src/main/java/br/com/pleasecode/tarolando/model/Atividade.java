@@ -1,9 +1,10 @@
 package br.com.pleasecode.tarolando.model;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
-
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+//@JsonIgnoreProperties({"", ""})
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Local.class)
 @Entity
 public class Atividade extends AbstractEntity {
 
@@ -21,15 +29,18 @@ public class Atividade extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 
+	@JsonProperty("seguimento")
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
 	
+	@JsonProperty("locais")
 	// mappedBy define o lado dominado no manyToMany bidirecional, ou seja, só serve pra mostrar a quem esse lado da relação pertence
 	@ManyToMany(mappedBy = "atividades") 
-	private List<Local> locais;
+	private Set<Local> locais;
 	
-	@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
+	@JsonProperty("indicacoes")
+	//@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -59,7 +70,7 @@ public class Atividade extends AbstractEntity {
 		return seguimento;
 	}
 	
-
+	@OneToMany
 	public List<Indicacao> getIndicacoes() {
 		return indicacoes;
 	}
@@ -68,15 +79,11 @@ public class Atividade extends AbstractEntity {
 		this.indicacoes = indicacoes;
 	}
 
-	public void setLocais(List<Local> locais) {
-		this.locais = locais;
-	}
-
 	public void setSeguimento(Seguimento seguimento) {
 		this.seguimento = seguimento;
 	}
 
-	public List<Local> getLocais() {
+	public Set<Local> getLocais() {
 		return locais;
 	}
 

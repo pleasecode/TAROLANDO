@@ -9,6 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+//@JsonIgnoreProperties(value = {"", ""}, ignoreUnknown = true, allowSetters= true, allowGetters = true)
 @Entity
 public class Indicacao extends AbstractEntity {
 
@@ -16,18 +20,22 @@ public class Indicacao extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
+	@JsonProperty("agente")
 	@ManyToOne
 	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 	private Empresa empresa;
-		
+	
+	@JsonProperty("agente")
 	@ManyToOne
 	@JoinColumn(name = "cod_agente", referencedColumnName = "id")
 	private Agente agente;
-		
+	
+	@JsonProperty("atividade")	
 	@ManyToOne
 	@JoinColumn(name = "cod_atividade", referencedColumnName = "id")
 	private Atividade atividade;
 	
+	@JsonProperty("local")
 	@ManyToOne
 	@JoinColumn(name = "cod_local", referencedColumnName = "id")
 	private Local local;	

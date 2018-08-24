@@ -3,6 +3,7 @@ package br.com.pleasecode.tarolando.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+//@JsonIgnoreProperties({"", ""})
 @Entity
 public class Local extends AbstractEntity {
 
@@ -22,18 +27,22 @@ public class Local extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
+	@JsonProperty("seguimento")
 	@ManyToOne
 	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
 	
-	@ManyToMany
+	@JsonProperty("atividades")
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
-	private List<Atividade> atividades;
+	private Set<Atividade> atividades;
 	
+	@JsonProperty("enderecos")
 	@OneToMany(mappedBy ="local", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
-	@OneToMany(mappedBy = "local")
+	//@OneToMany(mappedBy = "local")
+	//@JsonProperty
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -67,8 +76,13 @@ public class Local extends AbstractEntity {
 		this.seguimento = seguimento;
 	}
 
-	public List<Atividade> getAtividades() {
+	public Set<Atividade> getAtividades() {
 		return atividades;
+	}
+		
+	@OneToMany
+	public List<Indicacao> getIndicacoes() {
+		return indicacoes;
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -121,7 +135,7 @@ public class Local extends AbstractEntity {
 	}
 	
 	public void adicionaAtividade(Atividade atividade) {
-		List<Local> listaLocais = atividade.getLocais();
+		Set<Local> listaLocais = atividade.getLocais();
 		
 		this.atividades.add(atividade);
 		if (listaLocais != null)
