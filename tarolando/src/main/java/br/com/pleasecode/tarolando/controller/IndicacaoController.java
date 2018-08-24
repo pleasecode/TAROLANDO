@@ -18,7 +18,7 @@ import br.com.pleasecode.tarolando.repository.IndicacaoRepository;
 import br.com.pleasecode.tarolando.repository.LocalRepository;
 
 @RestController
-@RequestMapping("Indicacoes")
+@RequestMapping("indicacoes")
 public class IndicacaoController {
 	
 private final IndicacaoRepository indicacaoDAO;

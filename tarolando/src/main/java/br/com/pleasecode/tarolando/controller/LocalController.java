@@ -18,7 +18,7 @@ import br.com.pleasecode.tarolando.repository.LocalRepository;
 import br.com.pleasecode.tarolando.repository.PlanoRepository;
 
 @RestController
-@RequestMapping("Locais")
+@RequestMapping("locais")
 public class LocalController {
 	
 	private final LocalRepository localDAO;

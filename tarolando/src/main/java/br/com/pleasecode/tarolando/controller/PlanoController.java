@@ -18,7 +18,7 @@ import br.com.pleasecode.tarolando.repository.AgenteRepository;
 import br.com.pleasecode.tarolando.repository.PlanoRepository;
 
 @RestController
-@RequestMapping("Planos")
+@RequestMapping("planos")
 public class PlanoController {
 	
 	private final PlanoRepository planoDAO;
