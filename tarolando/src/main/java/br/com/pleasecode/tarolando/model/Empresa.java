@@ -11,10 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Empresa {
-	
-	@Column(name = "COD_EMPRESA")
-	private Long codEmpresa;
+public class Empresa extends AbstractEntity  {
 	
 	@OneToMany(mappedBy ="empresa", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
@@ -34,14 +31,6 @@ public class Empresa {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodEmpresa() {
-		return codEmpresa;
-	}
-
-	public void setCodEmpresa(Long codEmpresa) {
-		this.codEmpresa = codEmpresa;
-	}
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;

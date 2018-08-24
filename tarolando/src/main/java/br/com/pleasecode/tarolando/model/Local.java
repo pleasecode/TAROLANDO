@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -14,16 +15,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class Local implements Serializable {
-	@Column(name = "COD_LOCAL")
-	private Long codLocal;
-	
+@Entity
+public class Local extends AbstractEntity {
+
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
 	@ManyToOne
-	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "codSeguimento")
+	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
 	
 	@ManyToMany
@@ -51,14 +51,6 @@ public class Local implements Serializable {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 	
-	public Long getCodLocal() {
-		return codLocal;
-	}
-
-	public void setCodLocal(Long codLocal) {
-		this.codLocal = codLocal;
-	}
-
 	public Date getMomento() {
 		return momento;
 	}

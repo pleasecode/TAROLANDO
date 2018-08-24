@@ -15,22 +15,18 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Atividade implements Serializable{
-	
-	@Column(name = "COD_ATIVIDADE")
-	private Long codAtividade;
-	
+public class Atividade extends AbstractEntity {
+
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "codSeguimento")
+	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
 	
 	// mappedBy define o lado dominado no manyToMany bidirecional, ou seja, só serve pra mostrar a quem esse lado da relação pertence
 	@ManyToMany(mappedBy = "atividades") 
-	@JoinColumn(name = "cod_local", referencedColumnName = "codLocal")
 	private List<Local> locais;
 	
 	@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
@@ -50,14 +46,6 @@ public class Atividade implements Serializable{
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodAtividade() {
-		return codAtividade;
-	}
-
-	public void setCodAtividade(Long codAtividade) {
-		this.codAtividade = codAtividade;
-	}
 
 	public Date getMomento() {
 		return momento;

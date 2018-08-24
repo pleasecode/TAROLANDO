@@ -11,10 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Estado implements Serializable {
-	
-	@Column(name = "COD_ESTADO")
-	private Long codEstado;
+public class Estado extends AbstractEntity {
 	
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -31,15 +28,6 @@ public class Estado implements Serializable {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-	
-	
-	public Long getCodEstado() {
-		return codEstado;
-	}
-
-	public void setCodEstado(Long codEstado) {
-		this.codEstado = codEstado;
-	}
 
 	public Date getMomento() {
 		return momento;

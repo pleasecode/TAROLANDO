@@ -8,5 +8,5 @@ import br.com.pleasecode.tarolando.model.Agente;
 
 public interface AgenteRepository extends CrudRepository<Agente, Long>{
 
-	List<Agente> findByName(String nome);
+	List<Agente> findByNome(String nome);
 }

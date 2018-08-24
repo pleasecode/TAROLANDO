@@ -11,25 +11,22 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Endereco implements Serializable {
-	
-	@Column(name = "COD_ENDERECO")
-	private Long codEndereco;	
+public class Endereco extends AbstractEntity {
 	
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_agente", referencedColumnName = "codAgente")
+	@JoinColumn(name = "cod_agente", referencedColumnName = "id")
 	private Agente agente;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_empresa", referencedColumnName = "codEmpresa")
+	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 	private Empresa empresa;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_local", referencedColumnName = "codLocal")
+	@JoinColumn(name = "cod_local", referencedColumnName = "id")
 	private Local local;
 	
 	@Column(name = "RUA")
@@ -58,14 +55,6 @@ public class Endereco implements Serializable {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodEndereco() {
-		return codEndereco;
-	}
-
-	public void setCodEndereco(Long codEndereco) {
-		this.codEndereco = codEndereco;
-	}
 
 	public Date getMomento() {
 		return momento;

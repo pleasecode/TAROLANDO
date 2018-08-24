@@ -10,29 +10,26 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Indicacao {
-	
-	@Column(name = "COD_INDICACAO")
-	private Long codIndicacao;
-	
+public class Indicacao extends AbstractEntity {
+
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_empresa", referencedColumnName = "codEmpresa")
+	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 	private Empresa empresa;
 		
 	@ManyToOne
-	@JoinColumn(name = "cod_agente", referencedColumnName = "codAgente")
+	@JoinColumn(name = "cod_agente", referencedColumnName = "id")
 	private Agente agente;
 		
 	@ManyToOne
-	@JoinColumn(name = "cod_atividade", referencedColumnName = "codAtividade")
+	@JoinColumn(name = "cod_atividade", referencedColumnName = "id")
 	private Atividade atividade;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_local", referencedColumnName = "codLocal")
+	@JoinColumn(name = "cod_local", referencedColumnName = "id")
 	private Local local;	
 
 	@Column(name = "TX_LUCRO")
@@ -43,14 +40,6 @@ public class Indicacao {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodIndicacao() {
-		return codIndicacao;
-	}
-
-	public void setCodIndicacao(Long codIndicacao) {
-		this.codIndicacao = codIndicacao;
-	}	
 
 	public Empresa getEmpresa() {
 		return empresa;

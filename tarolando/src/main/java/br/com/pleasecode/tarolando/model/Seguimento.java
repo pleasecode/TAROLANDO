@@ -9,10 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Seguimento implements Serializable {
-	
-	@Column(name = "COD_SEGUIMENTO")
-	private Long codSeguimento;
+public class Seguimento extends AbstractEntity {
 
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -26,14 +23,6 @@ public class Seguimento implements Serializable {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodSeguimento() {
-		return codSeguimento;
-	}
-
-	public void setCodSeguimento(Long codSeguimento) {
-		this.codSeguimento = codSeguimento;
-	}
 
 	public Date getMomento() {
 		return momento;

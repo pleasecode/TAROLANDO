@@ -14,9 +14,9 @@ public class AgenteEmpresa extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
-	private Agente agente;
+	//private Agente agente;
 		
-	private Empresa empresa;
+	//private Empresa empresa;
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;

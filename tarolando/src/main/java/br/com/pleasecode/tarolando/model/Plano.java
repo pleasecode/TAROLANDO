@@ -8,11 +8,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Plano {
-	
-	@Column(name = "COD_PLANO")
-	private Long codPlano;
-	
+public class Plano extends AbstractEntity {
+
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;

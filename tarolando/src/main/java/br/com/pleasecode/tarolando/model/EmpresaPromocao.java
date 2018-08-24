@@ -10,17 +10,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class EmpresaPromocao {
-
-	@Column(name = "COD_EMPRESA_PROMOCAO")
-	private Long codEmpresaPromocao;
+public class EmpresaPromocao extends AbstractEntity  {
 	
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
 	@ManyToOne
-	@JoinColumn(name = "cod_empresa", referencedColumnName = "codEmpresa")
+	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 	private Empresa empresa;
 	
 	@Column(name = "NOME")
@@ -34,14 +31,6 @@ public class EmpresaPromocao {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-
-	public Long getCodEmpresaPromocao() {
-		return codEmpresaPromocao;
-	}
-
-	public void setCodEmpresaPromocao(Long codEmpresaPromocao) {
-		this.codEmpresaPromocao = codEmpresaPromocao;
-	}
 
 	public Date getMomento() {
 		return momento;

@@ -6,11 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class Configuracao {
-	
-	@Column(name = "COD_CONFIGURACAO")
-	private Long codConfiguracao;
-	
+public class Configuracao extends AbstractEntity  {
+
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
@@ -20,13 +17,7 @@ public class Configuracao {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
-	
-	public Long getCodConfiguracao() {
-		return codConfiguracao;
-	}
-	public void setCodConfiguracao(Long codConfiguracao) {
-		this.codConfiguracao = codConfiguracao;
-	}
+
 	public Date getMomento() {
 		return momento;
 	}
