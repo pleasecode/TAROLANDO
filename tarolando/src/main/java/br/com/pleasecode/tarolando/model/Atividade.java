@@ -14,33 +14,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 //@JsonIgnoreProperties({"", ""})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Local.class)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id" )
 @Entity
 public class Atividade extends AbstractEntity {
 
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
-
-	@JsonProperty("seguimento")
+	
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
 	
-	@JsonProperty("locais")
 	// mappedBy define o lado dominado no manyToMany bidirecional, ou seja, só serve pra mostrar a quem esse lado da relação pertence
 	@ManyToMany(mappedBy = "atividades") 
 	private Set<Local> locais;
 	
-	@JsonProperty("indicacoes")
-	//@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -70,7 +69,6 @@ public class Atividade extends AbstractEntity {
 		return seguimento;
 	}
 	
-	@OneToMany
 	public List<Indicacao> getIndicacoes() {
 		return indicacoes;
 	}

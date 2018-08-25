@@ -1,8 +1,5 @@
 package br.com.pleasecode.tarolando.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,57 +12,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import br.com.pleasecode.tarolando.model.Agente;
-import br.com.pleasecode.tarolando.model.Atividade;
-import br.com.pleasecode.tarolando.model.View;
+import br.com.pleasecode.tarolando.model.Seguimento;
 import br.com.pleasecode.tarolando.repository.AgenteRepository;
-import br.com.pleasecode.tarolando.repository.AtividadeRepository;
+import br.com.pleasecode.tarolando.repository.SeguimentoRepository;
 
 @RestController
-@RequestMapping("atividades")
-public class AtividadeController {
+@RequestMapping("seguimentos")
+public class SeguimentoController {
 	
-	private final AtividadeRepository atividadeDAO;
+	private final SeguimentoRepository seguimentoDAO;
 	
 	@Autowired
-	public AtividadeController(AtividadeRepository atividadeDAO) {
-		this.atividadeDAO = atividadeDAO;
+	public SeguimentoController(SeguimentoRepository seguimentoDAO) {
+		this.seguimentoDAO = seguimentoDAO;
 	}
-	
+
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll() {
-		return new ResponseEntity<>(atividadeDAO.findAll(), HttpStatus.OK);
+	public ResponseEntity<?> getAll() {	
+		return new ResponseEntity<>( seguimentoDAO.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		
-		return new ResponseEntity<>(atividadeDAO.findById(id),  HttpStatus.OK);
+		return new ResponseEntity<>(seguimentoDAO.findById(id),  HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Atividade atividade) {
-		return new ResponseEntity<>(atividadeDAO.save(atividade), HttpStatus.OK);
+	public ResponseEntity<?> save(@RequestBody Seguimento seguimento) {
+		return new ResponseEntity<>(seguimentoDAO.save(seguimento), HttpStatus.OK);
 	}
 	
 	@PutMapping
-	public ResponseEntity<?> atualiza(@RequestBody Atividade atividade) {
-		atividadeDAO.save(atividade);
+	public ResponseEntity<?> atualiza(@RequestBody Seguimento seguimento) {
+		seguimentoDAO.save(seguimento);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestBody Atividade atividade) {
-		atividadeDAO.delete(atividade);
+	public ResponseEntity<?> delete(@RequestBody Seguimento seguimento) {
+		seguimentoDAO.delete(seguimento);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
-		atividadeDAO.deleteById(id);
+		seguimentoDAO.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 
 }

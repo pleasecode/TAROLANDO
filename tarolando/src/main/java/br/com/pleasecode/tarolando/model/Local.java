@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -15,34 +16,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-//@JsonIgnoreProperties({"", ""})
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id" )
 @Entity
 public class Local extends AbstractEntity {
 
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
-	
-	@JsonProperty("seguimento")
+
 	@ManyToOne
 	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
 	private Seguimento seguimento;
-	
-	@JsonProperty("atividades")
+
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
 	private Set<Atividade> atividades;
-	
-	@JsonProperty("enderecos")
+
 	@OneToMany(mappedBy ="local", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
-	//@OneToMany(mappedBy = "local")
-	//@JsonProperty
+	@OneToMany
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -79,8 +80,7 @@ public class Local extends AbstractEntity {
 	public Set<Atividade> getAtividades() {
 		return atividades;
 	}
-		
-	@OneToMany
+
 	public List<Indicacao> getIndicacoes() {
 		return indicacoes;
 	}
