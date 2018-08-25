@@ -1,6 +1,7 @@
 package br.com.pleasecode.tarolando.model;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class Agente extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
-	@OneToMany(mappedBy ="agente", cascade = CascadeType.ALL)
-	private List<Endereco> enderecos;
+	//@OneToMany(mappedBy ="agente", cascade = CascadeType.ALL)
+	//private List<Endereco> enderecos;
 	
-	@OneToMany(mappedBy = "agente", cascade = CascadeType.ALL)
-	private List<Indicacao> indicacoes;
+	@OneToMany(mappedBy = "agente")
+	private List<Indicacao> indicacoes = new ArrayList<Indicacao>();
 	
 	@Column(name="NOME")
 	private String nome;
@@ -73,10 +74,6 @@ public class Agente extends AbstractEntity {
 
 	public void setMomento(Date momento) {
 		this.momento = momento;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
 	}
 
 	public String getNome() {
@@ -191,18 +188,26 @@ public class Agente extends AbstractEntity {
 		this.ativo = ativo;
 	}	
 	
+	
+//	public List<Endereco> getEnderecos() {
+//		return enderecos;
+//	}
 	public List<Indicacao> getIndicacoes() {
 		return indicacoes;
+	}
+
+	public void setIndicacoes(List<Indicacao> indicacoes) {
+		this.indicacoes = indicacoes;
 	}
 
 	public void adicionaIndicacao(Indicacao indicacao) {
 		this.indicacoes.add(indicacao);
 		indicacao.setAgente(this);
 	}
-	
-	public void adicionaEndereco(Endereco endereco) {
-		this.enderecos.add(endereco);
-		endereco.setAgente(this);
-	}
+//	
+//	public void adicionaEndereco(Endereco endereco) {
+//		this.enderecos.add(endereco);
+//		endereco.setAgente(this);
+//	}
 
 }

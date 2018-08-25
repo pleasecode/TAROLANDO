@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 //@JsonIgnoreProperties({"", ""})
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id" )
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id" )
 @Entity
 public class Atividade extends AbstractEntity {
 
@@ -36,10 +37,11 @@ public class Atividade extends AbstractEntity {
 	private Seguimento seguimento;
 	
 	// mappedBy define o lado dominado no manyToMany bidirecional, ou seja, só serve pra mostrar a quem esse lado da relação pertence
+	
 	@ManyToMany(mappedBy = "atividades") 
 	private Set<Local> locais;
 	
-	@OneToMany(mappedBy = "atividade", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "atividade")
 	private List<Indicacao> indicacoes;
 	
 	@Column(name = "NOME")
@@ -68,21 +70,9 @@ public class Atividade extends AbstractEntity {
 	public Seguimento getSeguimento() {
 		return seguimento;
 	}
-	
-	public List<Indicacao> getIndicacoes() {
-		return indicacoes;
-	}
-
-	public void setIndicacoes(List<Indicacao> indicacoes) {
-		this.indicacoes = indicacoes;
-	}
 
 	public void setSeguimento(Seguimento seguimento) {
 		this.seguimento = seguimento;
-	}
-
-	public Set<Local> getLocais() {
-		return locais;
 	}
 
 	public String getNome() {
@@ -117,6 +107,23 @@ public class Atividade extends AbstractEntity {
 		this.imagemUrl = imagemUrl;
 	}
 
+	@JsonBackReference
+	public Set<Local> getLocais() {
+		return locais;
+	}
+
+	public void setLocais(Set<Local> locais) {
+		this.locais = locais;
+	}
+
+	public List<Indicacao> getIndicacoes() {
+		return indicacoes;
+	}
+
+	public void setIndicacoes(List<Indicacao> indicacoes) {
+		this.indicacoes = indicacoes;
+	}
+
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -125,13 +132,4 @@ public class Atividade extends AbstractEntity {
 		this.ativo = ativo;
 	}	
 	
-	public void adicionaIndicacao(Indicacao indicacao) {
-		this.indicacoes.add(indicacao);
-		indicacao.setAtividade(this);
-	}
-	
-	public void adicionaLocais(Local local) {		
-		this.locais.add(local);
-		local.adicionaAtividade(this);
-	}
 }

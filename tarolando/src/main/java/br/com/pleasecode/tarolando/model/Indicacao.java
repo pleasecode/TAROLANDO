@@ -4,19 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id")
+import br.com.pleasecode.tarolando.serializers.AgenteSerializer;
+import br.com.pleasecode.tarolando.serializers.AtividadeSerializer;
+import br.com.pleasecode.tarolando.serializers.LocalSerializer;
+
+//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id")
 @Entity
 public class Indicacao extends AbstractEntity {
 
@@ -24,21 +23,26 @@ public class Indicacao extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date momento;
 	
-	@ManyToOne
-	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
-	private Empresa empresa;
-	
+//	@ManyToOne
+//	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
+//	private Empresa empresa;
+//	
 	@ManyToOne
 	@JoinColumn(name = "cod_agente", referencedColumnName = "id")
+	@JsonSerialize(using = AgenteSerializer.class)
 	private Agente agente;
 		
 	@ManyToOne
 	@JoinColumn(name = "cod_atividade", referencedColumnName = "id")
+	@JsonSerialize(using = AtividadeSerializer.class)
 	private Atividade atividade;
 	
 	@ManyToOne
 	@JoinColumn(name = "cod_local", referencedColumnName = "id")
-	private Local local;	
+	@JsonSerialize(using = LocalSerializer.class)
+	private Local local;
+	
+	
 
 	@Column(name = "TX_LUCRO")
 	private double tx_lucro;
@@ -49,14 +53,6 @@ public class Indicacao extends AbstractEntity {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
 	public Date getMomento() {
 		return momento;
 	}
@@ -65,7 +61,14 @@ public class Indicacao extends AbstractEntity {
 		this.momento = momento;
 	}
 
-
+//	public Empresa getEmpresa() {
+//		return empresa;
+//	}
+//
+//	public void setEmpresa(Empresa empresa) {
+//		this.empresa = empresa;
+//	}
+//
 	public Agente getAgente() {
 		return agente;
 	}

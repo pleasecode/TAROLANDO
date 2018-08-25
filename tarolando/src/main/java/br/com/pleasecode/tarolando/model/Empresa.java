@@ -13,14 +13,14 @@ import javax.persistence.TemporalType;
 @Entity
 public class Empresa extends AbstractEntity  {
 	
-	@OneToMany(mappedBy ="empresa", cascade = CascadeType.ALL)
-	private List<Endereco> enderecos;
-	
-	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-	private List<EmpresaPromocao> empresaPromocoes;
-	
-	@OneToMany(mappedBy = "empresa")
-	private List<Indicacao> indicacoes;
+//	@OneToMany(mappedBy ="empresa", cascade = CascadeType.ALL)
+//	private List<Endereco> enderecos;
+//	
+//	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+//	private List<EmpresaPromocao> empresaPromocoes;
+//	
+//	@OneToMany(mappedBy = "empresa")
+//	private List<Indicacao> indicacoes;
 	
 	@Column(name="MOMENTO")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -32,17 +32,17 @@ public class Empresa extends AbstractEntity  {
 	@Column(name = "ATIVO")
 	private boolean ativo;
 
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public List<EmpresaPromocao> getEmpresaPromocoes() {
-		return empresaPromocoes;
-	}
+//	public List<Endereco> getEnderecos() {
+//		return enderecos;
+//	}
+//
+//	public void setEnderecos(List<Endereco> enderecos) {
+//		this.enderecos = enderecos;
+//	}
+//
+//	public List<EmpresaPromocao> getEmpresaPromocoes() {
+//		return empresaPromocoes;
+//	}
 
 	public Date getMomento() {
 		return momento;
@@ -68,19 +68,19 @@ public class Empresa extends AbstractEntity  {
 		this.ativo = ativo;
 	}	
 	
-	public void adicionaEndereco(Endereco endereco) {
-		this.enderecos.add(endereco);
-		endereco.setEmpresa(this);
-	}
+//	public void adicionaEndereco(Endereco endereco) {
+//		this.enderecos.add(endereco);
+//		endereco.setEmpresa(this);
+//	}
+//	
+//	public void adicionaPromocao(EmpresaPromocao empresaPromocao) {
+//		this.empresaPromocoes.add(empresaPromocao);
+//		empresaPromocao.setEmpresa(this);
+//	}
 	
-	public void adicionaPromocao(EmpresaPromocao empresaPromocao) {
-		this.empresaPromocoes.add(empresaPromocao);
-		empresaPromocao.setEmpresa(this);
-	}
-	
-	public void adicionaIndicacao(Indicacao indicacao) {
-		this.indicacoes.add(indicacao);
-		indicacao.setEmpresa(this);
-	}
+//	public void adicionaIndicacao(Indicacao indicacao) {
+//		this.indicacoes.add(indicacao);
+//		indicacao.setEmpresa(this);
+//	}
 
 }

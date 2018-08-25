@@ -1,4 +1,4 @@
-package br.com.pleasecode.tarolando.util;
+package br.com.pleasecode.tarolando.serializers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,31 +14,36 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import br.com.pleasecode.tarolando.model.Local;
 
-public class CustomSerializer extends StdSerializer<List<Local>> {
+public class LocalSerializer extends StdSerializer<Local> {
 	
-	public CustomSerializer() {
+	public LocalSerializer() {
         this(null);
     }
 
-	protected CustomSerializer(Class<List<Local>> t) {
+	protected LocalSerializer(Class<Local> t) {
 		super(t);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void serialize(List<Local> locais,
+	public void serialize(Local local,
 		      JsonGenerator generator, 
 		      SerializerProvider provider)  throws IOException, JsonProcessingException {
-	      
+	     
+        	
+        	generator.writeStartObject();
+    		generator.writeNumberField("id", local.getId());
+    		generator.writeStringField("nome", local.getNome());
+    		generator.writeEndObject();
 		
-			generator.writeStartArray();
-	        for (Local local : locais) {
-	        	
-	        	generator.writeStartObject();
-	    		generator.writeNumberField("id", local.getId());
-	    		generator.writeEndObject();
-	        }
-	        generator.writeEndArray();
+//			generator.writeStartArray();
+//	        for (Local local : locais) {
+//	        	
+//	        	generator.writeStartObject();
+//	    		generator.writeNumberField("id", local.getId());
+//	    		generator.writeEndObject();
+//	        }
+//	        generator.writeEndArray();
 	        
 	        
 	       // generator.writeEndObject();

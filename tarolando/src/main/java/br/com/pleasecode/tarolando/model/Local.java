@@ -1,6 +1,7 @@
 package br.com.pleasecode.tarolando.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -20,11 +21,12 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id" )
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
 @Entity
 public class Local extends AbstractEntity {
 
@@ -39,13 +41,7 @@ public class Local extends AbstractEntity {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
 	private Set<Atividade> atividades;
-
-	@OneToMany(mappedBy ="local", cascade = CascadeType.ALL)
-	private List<Endereco> enderecos;
-	
-	@OneToMany
-	private List<Indicacao> indicacoes;
-	
+		
 	@Column(name = "NOME")
 	private String nome;
 	
@@ -60,6 +56,9 @@ public class Local extends AbstractEntity {
 	
 	@Column(name = "ATIVO")
 	private boolean ativo;
+	
+	@OneToMany(mappedBy = "local")
+	private List<Indicacao> indicacoes = new ArrayList<Indicacao>();
 	
 	public Date getMomento() {
 		return momento;
@@ -77,20 +76,16 @@ public class Local extends AbstractEntity {
 		this.seguimento = seguimento;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+	@JsonManagedReference
 	public Set<Atividade> getAtividades() {
 		return atividades;
 	}
 
-	public List<Indicacao> getIndicacoes() {
-		return indicacoes;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public String getNome() {
-		return nome;
+	public void setAtividades(Set<Atividade> atividades) {
+		this.atividades = atividades;
 	}
 
 	public void setNome(String nome) {
@@ -129,21 +124,11 @@ public class Local extends AbstractEntity {
 		this.ativo = ativo;
 	}
 
-	public void adicionaEndereco(Endereco endereco) {
-		this.enderecos.add(endereco);
-		endereco.setLocal(this);
+	public List<Indicacao> getIndicacoes() {
+		return indicacoes;
 	}
-	
-	public void adicionaAtividade(Atividade atividade) {
-		Set<Local> listaLocais = atividade.getLocais();
-		
-		this.atividades.add(atividade);
-		if (listaLocais != null)
-			atividade.getLocais().add(this);		
-	}
-	
-	public void adicionaIndicacao(Indicacao indicacao) {
-		this.indicacoes.add(indicacao);
-		indicacao.setLocal(this);
+
+	public void setIndicacoes(List<Indicacao> indicacoes) {
+		this.indicacoes = indicacoes;
 	}
 }
