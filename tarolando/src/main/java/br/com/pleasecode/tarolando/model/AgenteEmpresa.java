@@ -10,19 +10,10 @@ import javax.persistence.TemporalType;
 @Entity
 public class AgenteEmpresa extends AbstractEntity {
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
 	
 	//private Agente agente;
 		
 	//private Empresa empresa;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
-
-
-
 	
 	
 	

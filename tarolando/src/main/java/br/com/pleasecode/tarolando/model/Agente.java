@@ -16,10 +16,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class Agente extends AbstractEntity {
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 	//@OneToMany(mappedBy ="agente", cascade = CascadeType.ALL)
 	//private List<Endereco> enderecos;
 	
@@ -64,17 +60,6 @@ public class Agente extends AbstractEntity {
 	
 	@Column(name="COD_PLANO")
 	private int codPlano;
-	
-	@Column(name="ATIVO")
-	private boolean ativo;
-
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public String getNome() {
 		return nome;
@@ -179,15 +164,6 @@ public class Agente extends AbstractEntity {
 	public void setCodPlano(int codPlano) {
 		this.codPlano = codPlano;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}	
-	
 	
 //	public List<Endereco> getEnderecos() {
 //		return enderecos;

@@ -1,5 +1,9 @@
 package br.com.pleasecode.tarolando.controller;
 
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +16,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pleasecode.tarolando.model.Agente;
 import br.com.pleasecode.tarolando.model.Indicacao;
 import br.com.pleasecode.tarolando.model.Local;
+import br.com.pleasecode.tarolando.repository.AgenteRepository;
 import br.com.pleasecode.tarolando.repository.IndicacaoRepository;
 import br.com.pleasecode.tarolando.repository.LocalRepository;
+import br.com.pleasecode.tarolando.util.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("indicacoes")
 public class IndicacaoController {
 	
 private final IndicacaoRepository indicacaoDAO;
+private final LocalRepository localRepository;
+private final AgenteRepository agenteRepository;
 	
 	@Autowired
-	public IndicacaoController(IndicacaoRepository indicacaoDAO) {
+	public IndicacaoController(IndicacaoRepository indicacaoDAO, LocalRepository localRepository,
+			AgenteRepository agenteRepository) {
 		this.indicacaoDAO = indicacaoDAO;
+		this.localRepository = localRepository;
+		this.agenteRepository = agenteRepository;
 	}
 
 	@GetMapping("/getAll")
@@ -40,10 +52,24 @@ private final IndicacaoRepository indicacaoDAO;
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Indicacao indicacao) {
-		return new ResponseEntity<>(indicacaoDAO.save(indicacao), HttpStatus.OK);
+	public Indicacao salvar(@RequestBody Indicacao indicacao) {
+		
+		Local localBuscado = localRepository.findById(indicacao.getLocal().getId()).map(local -> {
+			local.adicionaIndicacoes(indicacao);
+			return local;
+		}).orElseThrow(() -> new ResourceNotFoundException("Local não encontrado"));
+		
+		Agente agenteBuscado = agenteRepository.findById(indicacao.getLocal().getId()).map(agente -> {
+			agente.adicionaIndicacao(indicacao);
+			return agente;
+		}).orElseThrow(() -> new ResourceNotFoundException("Agente não encontrado."));
+		
+		indicacao.setLocal(localBuscado);
+		indicacao.setAgente(agenteBuscado);
+		
+		return  indicacaoDAO.save(indicacao);
 	}
-	
+		
 	@PutMapping
 	public ResponseEntity<?> atualiza(@RequestBody Indicacao indicacao) {
 		indicacaoDAO.save(indicacao);

@@ -13,10 +13,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class Endereco extends AbstractEntity {
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 	@ManyToOne
 	@JoinColumn(name = "cod_agente", referencedColumnName = "id")
 	private Agente agente;
@@ -53,17 +49,6 @@ public class Endereco extends AbstractEntity {
 	@Column(name = "LONGITUDE")
 	private long longitude;
 	
-	@Column(name = "ATIVO")
-	private boolean ativo;
-
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
-
 	public Agente getAgente() {
 		return agente;
 	}
@@ -150,15 +135,6 @@ public class Endereco extends AbstractEntity {
 
 	public void setLongitude(long longitude) {
 		this.longitude = longitude;
-	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-		
+	}	
 	
 }

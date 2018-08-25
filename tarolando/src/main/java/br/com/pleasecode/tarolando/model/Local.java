@@ -19,28 +19,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.com.pleasecode.tarolando.serializers.AtividadeListSerializer;
+import br.com.pleasecode.tarolando.serializers.AtividadeSerializer;
 
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
 @Entity
 public class Local extends AbstractEntity {
-
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-
-	@ManyToOne
-	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
-	private Seguimento seguimento;
-
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
-	private Set<Atividade> atividades;
 		
 	@Column(name = "NOME")
 	private String nome;
@@ -54,19 +47,20 @@ public class Local extends AbstractEntity {
 	@Column(name = "IMAGEM_URL")
 	private String imagemUrl;
 	
-	@Column(name = "ATIVO")
-	private boolean ativo;
+	@ManyToOne
+	@JoinColumn(name = "COD_SEGUIMENTO", referencedColumnName = "id")
+	private Seguimento seguimento;
+
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "LOCAL_ATIVIDADE", joinColumns = {@JoinColumn(name = "LOCAL_ID")}, inverseJoinColumns = {@JoinColumn(name = "ATIVIDADE_ID")})
+	@JsonSerialize(using = AtividadeListSerializer.class)
+	private List<Atividade> atividades;
+	
+	@OneToMany(mappedBy = "local")
+	private List<Foto> fotos = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "local")
 	private List<Indicacao> indicacoes = new ArrayList<Indicacao>();
-	
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public Seguimento getSeguimento() {
 		return seguimento;
@@ -79,13 +73,23 @@ public class Local extends AbstractEntity {
 	public String getNome() {
 		return nome;
 	}
-	@JsonManagedReference
-	public Set<Atividade> getAtividades() {
+	
+	//@JsonManagedReference
+	//@JsonBackReferenc
+	public List<Atividade> getAtividades() {
 		return atividades;
 	}
 
-	public void setAtividades(Set<Atividade> atividades) {
+	public void setAtividades(List<Atividade> atividades) {
 		this.atividades = atividades;
+	}
+
+	public List<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<Foto> fotos) {
+		this.fotos = fotos;
 	}
 
 	public void setNome(String nome) {
@@ -116,19 +120,22 @@ public class Local extends AbstractEntity {
 		this.imagemUrl = imagemUrl;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public List<Indicacao> getIndicacoes() {
 		return indicacoes;
 	}
 
 	public void setIndicacoes(List<Indicacao> indicacoes) {
 		this.indicacoes = indicacoes;
+	}
+	
+	public void adicionaAtividade(Atividade atividade) {
+		this.atividades.add(atividade);
+		atividade.adicionaLocal(this);
+		atividade.setLocais(atividade.getLocais());
+	}
+	
+	public void adicionaIndicacoes(Indicacao indicacao) {
+		this.indicacoes.add(indicacao);
+		indicacao.setLocal(this);
 	}
 }

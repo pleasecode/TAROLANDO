@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import br.com.pleasecode.tarolando.model.Atividade;
 
-public interface AtividadeRepository extends CrudRepository<Atividade, Long>{
+@Repository
+public interface AtividadeRepository extends JpaRepository<Atividade, Long>{
 
 }

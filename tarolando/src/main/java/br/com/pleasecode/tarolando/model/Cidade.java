@@ -11,10 +11,6 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Cidade extends AbstractEntity  {
-
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
 	
 	@ManyToOne
 	@JoinColumn(name = "COD_ESTADO", referencedColumnName = "id")
@@ -22,17 +18,6 @@ public class Cidade extends AbstractEntity  {
 	
 	@Column(name = "NOME")
 	private String nome;
-		
-	@Column(name = "ATIVO")
-	private boolean ativo;
-
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public Estado getEstado() {
 		return estado;
@@ -49,14 +34,4 @@ public class Cidade extends AbstractEntity  {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}	
-
-
 }

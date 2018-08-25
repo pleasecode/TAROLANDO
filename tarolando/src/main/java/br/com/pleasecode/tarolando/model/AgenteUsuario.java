@@ -9,10 +9,6 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class AgenteUsuario extends AbstractEntity {
-
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
 	
 	//@Column(name="COD_AGENTE")	
 	//@Column(name="MOMENTO")
@@ -20,7 +16,5 @@ public class AgenteUsuario extends AbstractEntity {
 	private String usuario;
 	@Column(name="SENHA")
 	private String senha;
-	@Column(name="ATIVO")
-	private boolean ativo;
 
 }

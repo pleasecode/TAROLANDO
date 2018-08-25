@@ -28,25 +28,12 @@ public class LocalSerializer extends StdSerializer<Local> {
 	@Override
 	public void serialize(Local local,
 		      JsonGenerator generator, 
-		      SerializerProvider provider)  throws IOException, JsonProcessingException {
-	     
+		      SerializerProvider provider)  throws IOException, JsonProcessingException {     
         	
         	generator.writeStartObject();
     		generator.writeNumberField("id", local.getId());
     		generator.writeStringField("nome", local.getNome());
     		generator.writeEndObject();
-		
-//			generator.writeStartArray();
-//	        for (Local local : locais) {
-//	        	
-//	        	generator.writeStartObject();
-//	    		generator.writeNumberField("id", local.getId());
-//	    		generator.writeEndObject();
-//	        }
-//	        generator.writeEndArray();
-	        
-	        
-	       // generator.writeEndObject();
 	}
 
 }

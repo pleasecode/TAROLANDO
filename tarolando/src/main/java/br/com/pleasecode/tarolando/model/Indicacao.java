@@ -1,13 +1,9 @@
 package br.com.pleasecode.tarolando.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -19,10 +15,6 @@ import br.com.pleasecode.tarolando.serializers.LocalSerializer;
 @Entity
 public class Indicacao extends AbstractEntity {
 
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 //	@ManyToOne
 //	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 //	private Empresa empresa;
@@ -41,34 +33,13 @@ public class Indicacao extends AbstractEntity {
 	@JoinColumn(name = "cod_local", referencedColumnName = "id")
 	@JsonSerialize(using = LocalSerializer.class)
 	private Local local;
-	
-	
 
 	@Column(name = "TX_LUCRO")
 	private double tx_lucro;
 	
 	@Column(name = "VALOR_ATIVIDADE")
 	private double valorAtividade;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
 
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
-
-//	public Empresa getEmpresa() {
-//		return empresa;
-//	}
-//
-//	public void setEmpresa(Empresa empresa) {
-//		this.empresa = empresa;
-//	}
-//
 	public Agente getAgente() {
 		return agente;
 	}
@@ -108,14 +79,5 @@ public class Indicacao extends AbstractEntity {
 	public void setValorAtividade(double valorAtividade) {
 		this.valorAtividade = valorAtividade;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
 
 }

@@ -12,10 +12,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class EmpresaPromocao extends AbstractEntity  {
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 	@ManyToOne
 	@JoinColumn(name = "cod_empresa", referencedColumnName = "id")
 	private Empresa empresa;
@@ -28,17 +24,7 @@ public class EmpresaPromocao extends AbstractEntity  {
 	
 	@Column(name = "IMAGEM_URL")
 	private String imageUrl;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
 
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -71,14 +57,5 @@ public class EmpresaPromocao extends AbstractEntity  {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
 	
 }

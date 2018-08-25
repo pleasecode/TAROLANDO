@@ -13,10 +13,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class Estado extends AbstractEntity {
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades;
 	
@@ -25,17 +21,6 @@ public class Estado extends AbstractEntity {
 	
 	@Column(name = "SIGLA")
 	private String sigla;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
-
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public List<Cidade> getCidades() {
 		return cidades;
@@ -55,14 +40,6 @@ public class Estado extends AbstractEntity {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
-	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public void adicionaCidade(Cidade cidade) {

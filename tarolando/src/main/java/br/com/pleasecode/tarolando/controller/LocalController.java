@@ -1,6 +1,14 @@
 package br.com.pleasecode.tarolando.controller;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +27,7 @@ import br.com.pleasecode.tarolando.model.Plano;
 import br.com.pleasecode.tarolando.model.View;
 import br.com.pleasecode.tarolando.repository.LocalRepository;
 import br.com.pleasecode.tarolando.repository.PlanoRepository;
+import br.com.pleasecode.tarolando.util.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("locais")
@@ -32,19 +41,21 @@ public class LocalController {
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll() {	
-		return new ResponseEntity<>( localDAO.findAll(), HttpStatus.OK);
+	public Page<Local> getAll(Pageable pageable) {	
+		return localDAO.findAll(pageable);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+	public Local getById(@PathVariable("id") Long id) {
 		
-		return new ResponseEntity<>(localDAO.findById(id),  HttpStatus.OK);
+		return localDAO.findById(id).map(local -> {
+			return local;
+		}).orElseThrow(() -> new ResourceNotFoundException("Local não encontrado."));
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Local local) {
-		return new ResponseEntity<>(localDAO.save(local), HttpStatus.OK);
+	public Local save(@Valid @RequestBody Local local) {
+		return localDAO.save(local);
 	}
 	
 	@PutMapping
@@ -61,8 +72,10 @@ public class LocalController {
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
-		localDAO.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 
+		return localDAO.findById(id).map(local -> {
+			localDAO.delete(local); 
+			return ResponseEntity.ok().build();
+			}).orElseThrow(() -> new ResourceNotFoundException("Local não encontrado para deletar"));
+	}
 }

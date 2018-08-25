@@ -9,10 +9,6 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Plano extends AbstractEntity {
-
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
 	
 	@Column(name = "DATA")
 	@Temporal(TemporalType.DATE)
@@ -33,11 +29,4 @@ public class Plano extends AbstractEntity {
 	
 	@Column(name = "IMAGEM_URL")
 	private String imagemUrl;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
-	
-	
-	
-
 }

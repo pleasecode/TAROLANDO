@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,8 +37,8 @@ public class AtividadeController {
 	}
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll() {
-		return new ResponseEntity<>(atividadeDAO.findAll(), HttpStatus.OK);
+	public Page getAll(Pageable pageable) {
+		return atividadeDAO.findAll(pageable);
 	}
 	
 	@GetMapping(path = "/{id}")

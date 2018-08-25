@@ -22,15 +22,8 @@ public class Empresa extends AbstractEntity  {
 //	@OneToMany(mappedBy = "empresa")
 //	private List<Indicacao> indicacoes;
 	
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
-	
 	@Column(name = "CNPJ")
 	private String cnpj;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
 
 //	public List<Endereco> getEnderecos() {
 //		return enderecos;
@@ -44,14 +37,6 @@ public class Empresa extends AbstractEntity  {
 //		return empresaPromocoes;
 //	}
 
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
-
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -59,14 +44,6 @@ public class Empresa extends AbstractEntity  {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}	
 	
 //	public void adicionaEndereco(Endereco endereco) {
 //		this.enderecos.add(endereco);

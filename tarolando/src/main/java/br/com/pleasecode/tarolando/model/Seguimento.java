@@ -10,27 +10,12 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Seguimento extends AbstractEntity {
-
-	@Column(name="MOMENTO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date momento;
 	
 	@Column(name = "NOME")
 	private String nome;
 	
 	@Column(name = "IMAGEM_URL")
 	private String imagemUrl;
-	
-	@Column(name = "ATIVO")
-	private boolean ativo;
-
-	public Date getMomento() {
-		return momento;
-	}
-
-	public void setMomento(Date momento) {
-		this.momento = momento;
-	}
 
 	public String getNome() {
 		return nome;
@@ -48,14 +33,5 @@ public class Seguimento extends AbstractEntity {
 		this.imagemUrl = imagemUrl;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
-	
 
 }
