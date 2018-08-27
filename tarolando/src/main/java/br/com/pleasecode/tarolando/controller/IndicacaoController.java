@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pleasecode.tarolando.error.ResourceNotFoundException;
 import br.com.pleasecode.tarolando.model.Agente;
 import br.com.pleasecode.tarolando.model.Indicacao;
 import br.com.pleasecode.tarolando.model.Local;
 import br.com.pleasecode.tarolando.repository.AgenteRepository;
 import br.com.pleasecode.tarolando.repository.IndicacaoRepository;
 import br.com.pleasecode.tarolando.repository.LocalRepository;
-import br.com.pleasecode.tarolando.util.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("indicacoes")

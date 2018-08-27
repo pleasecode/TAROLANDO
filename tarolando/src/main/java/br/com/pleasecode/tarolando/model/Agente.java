@@ -9,8 +9,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.com.pleasecode.tarolando.serializers.AgenteUsuarioSerializer;
 
 
 @Entity
@@ -19,8 +24,11 @@ public class Agente extends AbstractEntity {
 	//@OneToMany(mappedBy ="agente", cascade = CascadeType.ALL)
 	//private List<Endereco> enderecos;
 	
-	@OneToMany(mappedBy = "agente")
+	@OneToMany(mappedBy = "agente", cascade = CascadeType.ALL)
 	private List<Indicacao> indicacoes = new ArrayList<Indicacao>();
+	
+	@OneToOne(mappedBy = "agente")
+	private AgenteUsuario AgenteUsuario;
 	
 	@Column(name="NOME")
 	private String nome;
@@ -60,6 +68,14 @@ public class Agente extends AbstractEntity {
 	
 	@Column(name="COD_PLANO")
 	private int codPlano;
+
+	public AgenteUsuario getAgenteUsuario() {
+		return AgenteUsuario;
+	}
+
+	public void setAgenteUsuario(AgenteUsuario agenteUsuario) {
+		AgenteUsuario = agenteUsuario;
+	}
 
 	public String getNome() {
 		return nome;
