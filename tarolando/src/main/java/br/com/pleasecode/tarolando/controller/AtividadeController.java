@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import br.com.pleasecode.tarolando.error.ResourceNotFoundException;
 import br.com.pleasecode.tarolando.model.Agente;
 import br.com.pleasecode.tarolando.model.Atividade;
 import br.com.pleasecode.tarolando.model.View;
@@ -37,14 +38,16 @@ public class AtividadeController {
 	}
 	
 	@GetMapping("/getAll")
-	public Page getAll(Pageable pageable) {
+	public Page<Atividade> getAll(Pageable pageable) {
 		return atividadeDAO.findAll(pageable);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+	public Atividade getById(@PathVariable("id") Long id) {
 		
-		return new ResponseEntity<>(atividadeDAO.findById(id),  HttpStatus.OK);
+		return atividadeDAO.findById(id).map(atividade -> {
+			return atividade;
+		}).orElseThrow(() -> new ResourceNotFoundException("Atividade não encontrada para o id" + id));
 	}
 	
 	@PostMapping

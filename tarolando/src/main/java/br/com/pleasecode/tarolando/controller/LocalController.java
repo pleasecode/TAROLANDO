@@ -20,14 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 
 import br.com.pleasecode.tarolando.error.ResourceNotFoundException;
 import br.com.pleasecode.tarolando.model.Local;
-import br.com.pleasecode.tarolando.model.Plano;
-import br.com.pleasecode.tarolando.model.View;
 import br.com.pleasecode.tarolando.repository.LocalRepository;
-import br.com.pleasecode.tarolando.repository.PlanoRepository;
 
 @RestController
 @RequestMapping("locais")

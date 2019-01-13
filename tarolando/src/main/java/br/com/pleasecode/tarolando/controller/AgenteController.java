@@ -1,10 +1,9 @@
 package br.com.pleasecode.tarolando.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pleasecode.tarolando.error.ResourceNotFoundException;
 import br.com.pleasecode.tarolando.model.Agente;
 import br.com.pleasecode.tarolando.repository.AgenteRepository;
 
@@ -33,16 +33,17 @@ public class AgenteController {
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll() {	
-		return new ResponseEntity<>( agenteDAO.findAll(), HttpStatus.OK);
+	public Page<Agente> getAll(Pageable pageable) {	
+		return agenteDAO.findAll(pageable);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long id, 
+	public Agente getById(@PathVariable("id") Long id, 
 			@AuthenticationPrincipal UserDetails userDatails) {
-		System.out.print(userDatails);
 		
-		return new ResponseEntity<>(agenteDAO.findById(id),  HttpStatus.OK);
+		return agenteDAO.findById(id).map(agente -> {
+			return agente;
+		}).orElseThrow(() -> new ResourceNotFoundException("Agente não encontrado com id" + id));
 	}
 	
 	@PostMapping

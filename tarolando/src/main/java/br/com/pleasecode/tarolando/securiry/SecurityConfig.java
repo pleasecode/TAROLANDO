@@ -1,11 +1,14 @@
 package br.com.pleasecode.tarolando.securiry;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import br.com.pleasecode.tarolando.service.CustomUserDetailsService;
 
@@ -16,11 +19,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.cors().configurationSource(Request -> new CorsConfiguration().applyPermitDefaultValues())
+		.and().csrf().disable()
+		.authorizeRequests()
 		.anyRequest()
 		.authenticated() // requisições autenticadas
-		.and().httpBasic() // método de autenticacao
-		.and().csrf().disable();
+		.and().httpBasic(); // método de autenticacao
+		
 	}
 
 	@Override

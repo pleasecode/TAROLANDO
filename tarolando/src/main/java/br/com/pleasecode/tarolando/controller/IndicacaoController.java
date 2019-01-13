@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,14 +43,16 @@ private final AgenteRepository agenteRepository;
 	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll() {	
-		return new ResponseEntity<>( indicacaoDAO.findAll(), HttpStatus.OK);
+	public Page<Indicacao> getAll(Pageable pageable) {	
+		return  indicacaoDAO.findAll(pageable);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+	public Indicacao getById(@PathVariable("id") Long id) {
 		
-		return new ResponseEntity<>(indicacaoDAO.findById(id),  HttpStatus.OK);
+		return indicacaoDAO.findById(id).map(indicacao -> {
+			return indicacao;
+		}).orElseThrow(()-> new ResourceNotFoundException("indicação não encontrada"));
 	}
 	
 	@PostMapping
@@ -57,12 +61,12 @@ private final AgenteRepository agenteRepository;
 		Local localBuscado = localRepository.findById(indicacao.getLocal().getId()).map(local -> {
 			local.adicionaIndicacoes(indicacao);
 			return local;
-		}).orElseThrow(() -> new ResourceNotFoundException("Local não encontrado"));
+		}).orElseThrow(() -> new ResourceNotFoundException("Impossível salva, Local não encontrado"));
 		
 		Agente agenteBuscado = agenteRepository.findById(indicacao.getLocal().getId()).map(agente -> {
 			agente.adicionaIndicacao(indicacao);
 			return agente;
-		}).orElseThrow(() -> new ResourceNotFoundException("Agente não encontrado."));
+		}).orElseThrow(() -> new ResourceNotFoundException("Impossível salvar, Agente não encontrado."));
 		
 		indicacao.setLocal(localBuscado);
 		indicacao.setAgente(agenteBuscado);
